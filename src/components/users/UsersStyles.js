@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 export const StyledUserListContainer = styled.div`
   margin-top: 20px;
+  margin-left: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 20px;
