@@ -1,11 +1,20 @@
 import { IoPersonRemoveSharp, IoPersonAddSharp } from "react-icons/io5";
+import { BsSortNumericDown, BsSortNumericUp } from "react-icons/bs";
 import { StyledUserButton, StyledListContainer } from "./UsersStyles";
 
-const Users = ({ users, onRemoveUser, onAddUser, addUsers }) => {
+const Users = ({
+  users,
+  onRemoveUser,
+  onAddUser,
+  addUsers,
+  filterUsersByAge,
+  filter,
+  setFilter,
+}) => {
   return (
     <div>
       <StyledListContainer>
-        <h4>Choose user you want to add to list.</h4>
+        {addUsers.length !== 0 && <h4>Choose user you want to add to list.</h4>}
         {addUsers.map((user) => {
           return (
             <li key={user.id}>
@@ -21,6 +30,16 @@ const Users = ({ users, onRemoveUser, onAddUser, addUsers }) => {
         })}
       </StyledListContainer>
       <h4>List of users:</h4>
+      <StyledUserButton
+        filtering
+        onClick={() =>
+          filterUsersByAge(
+            filter === "up" ? setFilter("down") : setFilter("up")
+          )
+        }
+      >
+        {filter === "up" ? <BsSortNumericDown /> : <BsSortNumericUp />}
+      </StyledUserButton>
       <StyledListContainer>
         {users.map((user) => {
           return (

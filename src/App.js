@@ -9,6 +9,7 @@ const App = () => {
   const [error, setError] = useState(false);
   const [users, setUsers] = useState(usersList);
   const [add, setAdd] = useState(addUsersList);
+  const [filter, setFilter] = useState("down");
 
   const onFormSubmit = (event) => {
     if (name.trim() === "") {
@@ -33,7 +34,36 @@ const App = () => {
     setAdd((prev) => [...prev, ...removedUser]);
     setUsers(removeUser);
   };
-
+  const filterUsersByAge = () => {
+    switch (filter) {
+      case "up":
+        const sortedUsersUp = users.sort((userA, userB) => {
+          if (userA.age > userB.age) {
+            return 1;
+          } else if (userA.age < userB.age) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        setUsers([...sortedUsersUp]);
+        break;
+      case "down":
+        const sortedUsersDown = users.sort((userA, userB) => {
+          if (userA.age < userB.age) {
+            return 1;
+          } else if (userA.age > userB.age) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        setUsers([...sortedUsersDown]);
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <StyledApp>
       <div>
@@ -50,6 +80,9 @@ const App = () => {
         users={users}
         onAddUser={onAddUser}
         addUsers={add}
+        filterUsersByAge={filterUsersByAge}
+        filter={filter}
+        setFilter={setFilter}
       />
     </StyledApp>
   );

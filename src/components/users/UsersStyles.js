@@ -18,4 +18,10 @@ export const StyledUserButton = styled.button`
     css`
       color: red;
     `}
+    ${({ filtering }) =>
+    filtering &&
+    css`
+      color: purple;
+      font-size: 25px;
+    `}
 `;
