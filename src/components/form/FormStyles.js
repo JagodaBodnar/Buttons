@@ -22,15 +22,15 @@ export const StyledInput = styled.input`
 
 export const StyledFormButton = styled.button`
   background-color: transparent;
-  color: #8fc866;
-  border: 1px solid #8fc866;
+  color: ${({ theme }) => theme.blue};
+  border: 1px solid ${({ theme }) => theme.blue};
   outline: none;
   padding: 5px 10px;
   align-self: flex-end;
   cursor: pointer;
   transition: 1s;
   &:hover {
-    box-shadow: inset 6.5em 0 0 0 #8fc866;
+    box-shadow: inset 6.5em 0 0 0 ${({ theme }) => theme.blue};
     color: #fff;
   }
 `;

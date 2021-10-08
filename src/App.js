@@ -3,6 +3,10 @@ import { StyledApp } from "./AppStyles";
 import Form from "./components/form/Form";
 import Users from "./components/users/Users";
 import { usersList, addUsersList } from "./data/UsersList";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./components/toggleTheme/ToggleStyles";
+import GlobalStyle from "./globalStyles/GlobalStyles";
+import ThemeButton from "./components/toggleTheme/Toggle";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -10,6 +14,23 @@ const App = () => {
   const [users, setUsers] = useState(usersList);
   const [add, setAdd] = useState(addUsersList);
   const [filter, setFilter] = useState("down");
+
+  let themeStoredInLocalStorage = localStorage.getItem("theme");
+  const storeThemeInLocalStorage = (theme) => {
+    localStorage.setItem("theme", theme);
+  };
+  const [theme, setTheme] = useState(
+    themeStoredInLocalStorage ? themeStoredInLocalStorage : "light"
+  );
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+      storeThemeInLocalStorage("dark");
+    } else {
+      setTheme("light");
+      storeThemeInLocalStorage("light");
+    }
+  };
 
   const onFormSubmit = (event) => {
     if (name.trim() === "") {
@@ -65,26 +86,27 @@ const App = () => {
     }
   };
   return (
-    <StyledApp>
-      <div>
-        <button>Button1</button>
-      </div>
-      <Form
-        onFormSubmit={onFormSubmit}
-        name={name}
-        setName={setName}
-        error={error}
-      />
-      <Users
-        onRemoveUser={onRemoveUser}
-        users={users}
-        onAddUser={onAddUser}
-        addUsers={add}
-        filterUsersByAge={filterUsersByAge}
-        filter={filter}
-        setFilter={setFilter}
-      />
-    </StyledApp>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyle />
+      <StyledApp>
+        <ThemeButton toggleTheme={toggleTheme} theme={theme} />
+        <Form
+          onFormSubmit={onFormSubmit}
+          name={name}
+          setName={setName}
+          error={error}
+        />
+        <Users
+          onRemoveUser={onRemoveUser}
+          users={users}
+          onAddUser={onAddUser}
+          addUsers={add}
+          filterUsersByAge={filterUsersByAge}
+          filter={filter}
+          setFilter={setFilter}
+        />
+      </StyledApp>
+    </ThemeProvider>
   );
 };
 
